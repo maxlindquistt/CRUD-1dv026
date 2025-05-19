@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Snippet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .snippet-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 50px 0;
+            font-size: 18px;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a, button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        a:hover, button:hover {
+            background-color: #45a049;
+        }
+
+        .description {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .description p {
+            margin: 10px;
+            text-align: center;
+        }
+
+        .code {
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .code p {
+            margin-top: 20px;
+            margin-bottom: 0px;
+            text-align: center;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            border-color: black;
+            overflow-x: auto;
+        }
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #ff4c4c;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .logout-button:hover {
+            background-color: #e04343;
+        }
+    </style>
+</head>
+<body>
+    <a href="/logout" class="logout-button">Log Out</a>
+    <div class="snippet-container">
+        <h2>Delete Snippet</h2>
+        <div class="description">
+            <p><strong>Description:</strong></p>
+            <p><%= snippet.description %></p>
+        </div>
+            <hr>
+        <div class="code">
+            <p><strong>Code:</strong></p> <br>
+            <pre><code><%= snippet.snippet %></code></pre>
+        </div>
+        
+        <div class="actions">
+            <form action="/snippets/<%= snippet.id %>/delete" method="POST">
+                <button type="submit">Confirm Delete</button>
+            </form>
+            <a href="/home">Cancel</a>
+        </div>
+    </div>
+</body>
+</html>

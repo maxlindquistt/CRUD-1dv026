@@ -1,0 +1,32 @@
+{
+  "name": "assignment-b1-crud-snippets",
+  "version": "1.0.0",
+  "description": "A simple CRUD application for managing code snippets",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
+  },
+  "keywords": [],
+  "author": "Max Lindquist",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.10",
+    "eslint": "^8.47.0",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.9.6"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.2",
+    "nodemon": "^3.1.9"
+  }
+}
