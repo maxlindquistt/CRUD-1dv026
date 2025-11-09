@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Snippet</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            position: relative;
         }
 
         main {
@@ -20,12 +26,17 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            width: 100%;
+            max-width: 500px;
         }
 
         header {
             text-align: center;
             margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 1.75rem;
         }
 
         form div {
@@ -35,6 +46,7 @@
         label {
             display: block;
             margin-bottom: 5px;
+            font-weight: bold;
         }
 
         input[type="text"], textarea {
@@ -43,11 +55,13 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
         }
 
         textarea {
             resize: vertical;
-            height: 150px;
+            min-height: 150px;
         }
 
         button {
@@ -59,13 +73,23 @@
             color: white;
             font-size: 16px;
             cursor: pointer;
+            margin-top: 5px;
         }
 
         button:hover {
             background-color: #45a049;
         }
+        
+        button[type="button"] {
+            background-color: #808080;
+        }
+        
+        button[type="button"]:hover {
+            background-color: #666666;
+        }
+        
         .logout-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
             padding: 10px 20px;
@@ -73,13 +97,15 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
+            z-index: 100;
         }
 
         .logout-button:hover {
             background-color: #e04343;
         }
+        
         .register-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 130px;
             padding: 10px 20px;
@@ -87,19 +113,101 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
+            z-index: 100;
         }
 
         .register-button:hover {
             background-color: #e04343;
         }
+
+        .header-buttons {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                align-items: stretch;
+                padding-top: 80px;
+            }
+            
+            .logout-button,
+            .register-button {
+                position: fixed;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                width: auto;
+                text-align: center;
+            }
+            
+            .register-button {
+                top: 50px;
+                right: auto;
+            }
+            
+            .header-buttons {
+                display: block;
+                position: fixed;
+                top: 10px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                z-index: 100;
+            }
+            
+            .header-buttons .logout-button,
+            .header-buttons .register-button {
+                position: static;
+                transform: none;
+                display: inline-block;
+                margin: 5px;
+                width: auto;
+            }
+            
+            main {
+                padding: 25px;
+                margin-top: 0;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                padding-top: 80px;
+            }
+            
+            main {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.25rem;
+            }
+            
+            input[type="text"], 
+            textarea,
+            button {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
     <% if (username === 'guest') { %>
-    <a href="/" class="logout-button">Log In</a>
-    <a href="/register" class="register-button">Register</a>
+        <div class="header-buttons">
+            <a href="/" class="logout-button">Log In</a>
+            <a href="/register" class="register-button">Register</a>
+        </div>
     <% } else { %>
-    <a href="/logout" class="logout-button">Log Out</a>
+        <a href="/logout" class="logout-button">Log Out</a>
     <% } %>
     <main>
         <header>

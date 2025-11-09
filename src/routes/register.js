@@ -1,5 +1,5 @@
 import express from 'express'
-import { registerUser } from '../controllers/user.controller.js'
+import { registerUser, registerValidation } from '../controllers/user.controller.js'
 
 const router = express.Router()
 
@@ -8,6 +8,6 @@ router.get('/', (req, res) => {
   res.render('register')
 })
 
-router.post('/', registerUser)
+router.post('/', registerValidation, registerUser)
 
 export default router

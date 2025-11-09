@@ -6,6 +6,10 @@
     <title>CRUD Application</title>
     <script type="module" src="../server.js"></script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -15,32 +19,37 @@
             justify-content: center;
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
+            position: relative;
         }
 
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            margin-top: 60px;
+            font-size: 2rem;
         }
 
         table {
-            max-width: 800px;
-            min-width: fit-content;
+            width: 100%;
+            max-width: 900px;
             border-collapse: collapse;
             margin-bottom: 20px;
-            align-self: center;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ccc;
             text-align: left;
-            max-width: 400px;
             word-wrap: break-word;
             vertical-align: middle;
         }
 
         th {
             background-color: #f2f2f2;
+            font-weight: bold;
         }
 
         a {
@@ -50,6 +59,7 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
+            margin: 5px;
         }
 
         a:hover {
@@ -59,11 +69,17 @@
         .actions {
             display: flex;
             justify-content: space-around;
-            width: 300px;
-
+            flex-wrap: wrap;
+            gap: 5px;
         }
+        
+        .actions a {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        
         .logout-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
             padding: 10px 20px;
@@ -71,13 +87,15 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
+            z-index: 100;
         }
 
         .logout-button:hover {
             background-color: #e04343;
         }
+        
         .register-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 130px;
             padding: 10px 20px;
@@ -85,11 +103,13 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
+            z-index: 100;
         }
 
         .register-button:hover {
             background-color: #e04343;
         }
+        
         .alert {
             padding: 10px;
             margin-bottom: 20px;
@@ -97,23 +117,100 @@
             border-radius: 5px;
             text-align: center;
             background-color: #007BFF;
+            max-width: 900px;
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+                margin-top: 80px;
+            }
+            
+            .logout-button,
+            .register-button {
+                position: static;
+                display: block;
+                width: calc(50% - 10px);
+                margin: 10px 5px;
+                text-align: center;
+            }
+            
+            body {
+                padding: 10px;
+            }
+            
+            .header-buttons {
+                display: flex;
+                width: 100%;
+                max-width: 900px;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+            
+            table {
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
+            
+            .actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .actions a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.25rem;
+            }
+            
+            table {
+                font-size: 0.8rem;
+            }
+            
+            th, td {
+                padding: 6px;
+            }
+            
+            a {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .logout-button,
+            .register-button {
+                width: 100%;
+                margin: 5px 0;
+            }
         }
     </style>
 </head>
 <body>
     
     <% if (typeof flash !== 'undefined') { %>
-        <div class="alert alert-<% flash.type %>">
+        <div class="alert alert-<%= flash.type %>">
             <%= flash.text %>
         </div>
-        <% } %>
+    <% } %>
 
     <% if (username === 'guest') { %>
-        <a href="/" class="logout-button">Log In</a>
-        <a href="/register" class="register-button">Register</a>
-        <% } else { %>
+        <div class="header-buttons">
+            <a href="/" class="logout-button">Log In</a>
+            <a href="/register" class="register-button">Register</a>
+        </div>
+    <% } else { %>
         <a href="/logout" class="logout-button">Log Out</a>
-        <% } %>
+    <% } %>
 
     <h1>CRUD Application</h1>
     <% if (snippets.length === 0) { %>

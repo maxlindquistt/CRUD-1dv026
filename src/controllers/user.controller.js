@@ -1,5 +1,22 @@
 import bcrypt from 'bcryptjs'
+import { body, validationResult } from 'express-validator'
 import User from '../models/user.model.js'
+
+/**
+ * Validation rules for user registration
+ */
+export const registerValidation = [
+  body('username')
+    .trim()
+    .isLength({ min: 3, max: 30 })
+    .withMessage('Username must be between 3 and 30 characters')
+    .isAlphanumeric()
+    .withMessage('Username must contain only letters and numbers')
+    .escape(),
+  body('password')
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long')
+]
 
 /**
  * This function will register a new user in the database.
@@ -9,6 +26,16 @@ import User from '../models/user.model.js'
  */
 const registerUser = async (req, res) => {
   try {
+    // Check for validation errors
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      req.session.flash = {
+        type: 'error',
+        text: errors.array()[0].msg
+      }
+      return res.redirect('/register')
+    }
+
     const existingUser = await User.findOne({ username: req.body.username })
     if (existingUser || req.body.username === 'guest') {
       req.session.flash = {

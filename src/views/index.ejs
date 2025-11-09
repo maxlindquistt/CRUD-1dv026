@@ -6,25 +6,32 @@
     <title>Inloggningssida</title>
     <script type="module" src="../server.js"></script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
         }
         .login-container {
             background-color: #fff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 100%;
+            max-width: 400px;
         }
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 1.5rem;
         }
         input[type="text"], input[type="password"] {
             width: 100%;
@@ -33,6 +40,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+            font-size: 16px;
         }
         input[type="submit"] {
             width: 100%;
@@ -54,10 +62,8 @@
         .register a {
             text-decoration: none;
             color: #007BFF;
-        }
-
-        .register a:first-child {
-            margin-right: 10px;
+            display: inline-block;
+            margin: 5px;
         }
 
         .alert {
@@ -67,6 +73,36 @@
             border-radius: 5px;
             text-align: center;
             background-color: #007BFF;
+            word-wrap: break-word;
+        }
+        
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+            }
+            
+            input[type="text"], 
+            input[type="password"], 
+            input[type="submit"] {
+                font-size: 14px;
+                padding: 12px;
+            }
+            
+            .register a {
+                display: block;
+                margin: 10px 0;
+            }
         }
     </style>
 </head>
@@ -76,10 +112,10 @@
     <h2>Log in</h2>
 
     <% if (typeof flash !== 'undefined') { %>
-        <div class="alert alert-<% flash.type %>">
+        <div class="alert alert-<%= flash.type %>">
             <%= flash.text %>
         </div>
-        <% } %>
+    <% } %>
         
     <form action="/login" method="post">
         <label for="username">Username:</label>

@@ -1,4 +1,20 @@
 import Snippet from '../models/snippet.model.js'
+import { body, validationResult } from 'express-validator'
+
+/**
+ * Validation rules for snippet creation and editing
+ */
+export const snippetValidation = [
+  body('description')
+    .trim()
+    .isLength({ min: 3, max: 200 })
+    .withMessage('Description must be between 3 and 200 characters')
+    .escape(),
+  body('snippet')
+    .trim()
+    .isLength({ min: 1, max: 5000 })
+    .withMessage('Snippet must be between 1 and 5000 characters')
+]
 
 /**
  * This function will get all the snippets from the database and return them as an array.
@@ -51,6 +67,16 @@ const addSnippet = async (req, res) => {
     if (req.session.username === 'guest' || !req.session.username) {
       res.sendStatus(404)
     } else {
+      // Check for validation errors
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        req.session.flash = {
+          type: 'error',
+          text: errors.array()[0].msg
+        }
+        return res.redirect('/snippets/new')
+      }
+
       const snippet = new Snippet({
         description: req.body.description,
         snippet: req.body.snippet,
@@ -144,6 +170,16 @@ const postEditSnippet = async (req, res) => {
     } else if (req.session.username === 'guest' || !req.session.username) {
       res.sendStatus(404)
     } else {
+      // Check for validation errors
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        req.session.flash = {
+          type: 'error',
+          text: errors.array()[0].msg
+        }
+        return res.redirect(`/snippets/${req.params.id}/edit`)
+      }
+
       await Snippet.findByIdAndUpdate(req.params.id, {
         description: req.body.description,
         snippet: req.body.snippet

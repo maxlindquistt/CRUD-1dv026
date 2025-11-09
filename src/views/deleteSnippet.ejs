@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Snippet</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            position: relative;
         }
 
         .snippet-container {
@@ -20,71 +26,97 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            width: 100%;
+            max-width: 600px;
         }
 
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 1.75rem;
+            color: #ff4c4c;
         }
 
         p {
-            margin: 50px 0;
+            margin: 20px 0;
             font-size: 18px;
         }
 
         .actions {
             text-align: center;
             margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
 
         a, button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #808080;
             color: white;
             border-radius: 5px;
             text-decoration: none;
-            margin: 5px;
             border: none;
             cursor: pointer;
+            font-size: 16px;
         }
 
-        a:hover, button:hover {
-            background-color: #45a049;
+        a:hover {
+            background-color: #666666;
+        }
+        
+        button {
+            background-color: #ff4c4c;
+        }
+
+        button:hover {
+            background-color: #e04343;
         }
 
         .description {
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
         }
 
         .description p {
-            margin: 10px;
-            text-align: center;
+            margin: 10px 0;
         }
 
         .code {
             margin-bottom: 10px;
-            align-items: center;
         }
 
         .code p {
             margin-top: 20px;
-            margin-bottom: 0px;
-            text-align: center;
+            margin-bottom: 10px;
         }
+        
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+        
         pre {
             background-color: #f4f4f4;
-            padding: 10px;
-            border: 1px solid black;
+            padding: 15px;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            border-color: black;
             overflow-x: auto;
+            word-wrap: break-word;
         }
+        
+        code {
+            display: block;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
         .logout-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
             padding: 10px 20px;
@@ -92,10 +124,77 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
+            z-index: 100;
         }
 
         .logout-button:hover {
             background-color: #e04343;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .snippet-container {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 16px;
+            }
+            
+            .logout-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .snippet-container {
+                padding: 15px;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+            }
+            
+            p {
+                font-size: 14px;
+                margin: 10px 0;
+            }
+            
+            code {
+                font-size: 12px;
+            }
+            
+            a, button {
+                padding: 8px 15px;
+                font-size: 14px;
+                width: 100%;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .logout-button {
+                position: static;
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            .header-buttons {
+                text-align: center;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>

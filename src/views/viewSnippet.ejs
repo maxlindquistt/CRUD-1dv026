@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Snippet</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            position: relative;
         }
 
         .snippet-container {
@@ -20,24 +26,28 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 600px;
-            text-align: center;
+            width: 100%;
+            max-width: 700px;
         }
 
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            align-self: center;
+            font-size: 1.75rem;
         }
 
         p {
-            margin: 50px 0;
+            margin: 20px 0;
             font-size: 18px;
         }
 
         .actions {
             text-align: center;
             margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
 
         a {
@@ -47,7 +57,6 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
-            margin: 5px;
         }
 
         a:hover {
@@ -56,45 +65,47 @@
 
         .description {
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
         }
 
         .description p {
-            margin: 10px;
-            text-align: center;
+            margin: 10px 0;
         }
 
         .code {
             margin-bottom: 10px;
-            align-items: center;
-            height: auto;
         }
+        
         .code p {
             margin-top: 20px;
-            margin-bottom: 0px;
-            text-align: center;
+            margin-bottom: 10px;
         }
+        
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+        
         pre {
             background-color: #f4f4f4;
-            padding: 10px;
-            border: 1px solid black;
+            padding: 15px;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            border-color: black;
             overflow-x: auto;
             word-wrap: break-word;
             max-width: 100%;
-            height: auto;
         }
+        
         code {
             display: block;
-            font-size: 16px;
-            overflow-x: break-word;
-            max-width: 600px;
-            min-height: 50px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
+        
         .logout-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
             padding: 10px 20px;
@@ -102,13 +113,15 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
+            z-index: 100;
         }
 
         .logout-button:hover {
             background-color: #e04343;
         }
+        
         .register-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 130px;
             padding: 10px 20px;
@@ -116,20 +129,121 @@
             color: white;
             border-radius: 5px;
             text-decoration: none;
+            z-index: 100;
         }
 
         .register-button:hover {
             background-color: #e04343;
         }
+
+        .header-buttons {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                align-items: stretch;
+                padding-top: 80px;
+            }
+            
+            .snippet-container {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 16px;
+            }
+            
+            .logout-button,
+            .register-button {
+                position: fixed;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 10px 20px;
+                font-size: 0.9rem;
+                width: auto;
+                text-align: center;
+            }
+            
+            .register-button {
+                top: 50px;
+                right: auto;
+            }
+            
+            .header-buttons {
+                display: block;
+                position: fixed;
+                top: 10px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                z-index: 100;
+            }
+            
+            .header-buttons .logout-button,
+            .header-buttons .register-button {
+                position: static;
+                transform: none;
+                display: inline-block;
+                margin: 5px;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                padding-top: 80px;
+            }
+            
+            .snippet-container {
+                padding: 15px;
+            }
+            
+            h2 {
+                font-size: 1.25rem;
+            }
+            
+            p {
+                font-size: 14px;
+                margin: 10px 0;
+            }
+            
+            code {
+                font-size: 12px;
+            }
+            
+            a {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .actions a {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <% if (username === 'guest') { %>
-        <a href="/" class="logout-button">Log In</a>
-        <a href="/register" class="register-button">Register</a>
-        <% } else { %>
+        <div class="header-buttons">
+            <a href="/" class="logout-button">Log In</a>
+            <a href="/register" class="register-button">Register</a>
+        </div>
+    <% } else { %>
         <a href="/logout" class="logout-button">Log Out</a>
-        <% } %>
+    <% } %>
     <div class="snippet-container">
         <h2>Snippet Details</h2>
         <div class="description">
