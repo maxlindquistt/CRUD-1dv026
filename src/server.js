@@ -115,17 +115,24 @@ app.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-const PORT = process.env.PORT || 3000
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/crud-app'
 
+// Connect to MongoDB
 mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB')
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`)
-    })
   })
   .catch(err => {
     console.error('MongoDB connection error:', err)
-    process.exit(1)
   })
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`)
+  })
+}
+
+// Export for Vercel serverless
+export default app
