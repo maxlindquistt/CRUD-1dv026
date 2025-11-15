@@ -125,6 +125,28 @@
             display: none;
         }
 
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #808080;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .cancel-button{
+            width: 100%;
+        }
+
+        a:hover {
+            background-color: #666666;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             body {
@@ -226,10 +248,10 @@
             <div>
                 <button type="submit">Add Snippet</button>
             </div>
-            <div>
-                <button type="button" onclick="window.location.href='/home';">Cancel</button>
-            </div>
         </form>
+        <div class="actions">
+            <a href="/home" class="cancel-button">Cancel</a>
+        </div>
     </main>
 </body>
 </html>
