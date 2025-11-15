@@ -51,6 +51,10 @@ const authLimiter = rateLimit({
 app.use(express.json())
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// Serve static files (favicon, etc.)
+app.use(express.static(path.join(path.resolve(), 'public')))
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'fallback-secret-change-in-production',
   name: 'sessionID',
